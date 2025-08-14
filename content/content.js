@@ -43,6 +43,59 @@ class PromptEnhancer {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.hideEnhanceButton();
+      } else if ((e.metaKey || e.ctrlKey) && e.key && e.key.toLowerCase() === 'a') {
+        // Cmd/Ctrl + A: Select All — show the Enhance button near the selection
+        // Delay to allow the selection to update
+        setTimeout(() => {
+          let selectedText = '';
+          const selection = window.getSelection();
+          try {
+            selectedText = selection.toString().trim();
+          } catch (_) {}
+
+          // Fallback for inputs/textareas where window selection may not capture text
+          if (!selectedText) {
+            const active = document.activeElement;
+            if (active && (active.tagName === 'TEXTAREA' || (active.tagName === 'INPUT' && active.type === 'text'))) {
+              const start = active.selectionStart;
+              const end = active.selectionEnd;
+              if (start != null && end != null && end > start) {
+                try { selectedText = active.value.substring(start, end).trim(); } catch (_) {}
+              }
+            }
+          }
+
+          if (selectedText && selectedText.length > 3) {
+            this.selectedText = selectedText;
+
+            // Try to preserve the DOM Range if available
+            let placed = false;
+            try {
+              if (selection && selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                this.selectedRange = range.cloneRange();
+                const rect = range.getBoundingClientRect();
+                if (rect && rect.width >= 0 && rect.height >= 0) {
+                  const x = rect.left + rect.width / 2 + window.scrollX;
+                  const y = rect.top + window.scrollY;
+                  this.showEnhanceButton(x, y);
+                  placed = true;
+                }
+              }
+            } catch (_) {}
+
+            // Fallback: position near the active element or viewport center
+            if (!placed) {
+              const target = document.activeElement || document.body;
+              const rect = (target && target.getBoundingClientRect) ? target.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0 };
+              const x = rect.left + (rect.width || 0) / 2 + window.scrollX;
+              const y = rect.top + window.scrollY;
+              this.showEnhanceButton(x, y);
+            }
+          } else {
+            this.hideEnhanceButton();
+          }
+        }, 0);
       }
     });
   }
