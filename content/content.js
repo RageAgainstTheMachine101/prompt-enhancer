@@ -144,24 +144,31 @@ class PromptEnhancer {
 
     try {
       this.showToast('Enhancing prompt...', 'info');
-
-      const response = await fetch(this.webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: this.selectedText,
-          timestamp: new Date().toISOString(),
-          url: window.location.href
-        })
+      // Send request to background service worker to avoid mixed-content/CORS issues
+      const result = await new Promise((resolve, reject) => {
+        try {
+          chrome.runtime.sendMessage(
+            {
+              action: 'enhance-prompt',
+              text: this.selectedText
+            },
+            (response) => {
+              if (chrome.runtime.lastError) {
+                return reject(new Error(chrome.runtime.lastError.message));
+              }
+              if (!response) {
+                return reject(new Error('No response from background'));
+              }
+              if (response.error) {
+                return reject(new Error(response.error));
+              }
+              resolve(response.result);
+            }
+          );
+        } catch (err) {
+          reject(err);
+        }
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
       
       // Extract enhanced text from response
       let enhancedText = result.enhancedText || result.enhanced_text || result.text || result.result;
