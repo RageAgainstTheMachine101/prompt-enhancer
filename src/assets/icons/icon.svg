@@ -1,0 +1,30 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="56" fill="url(#iconGradient)" stroke="white" stroke-width="4"/>
+  
+  <!-- Main star (enhancement symbol) -->
+  <g fill="white" opacity="0.95">
+    <path d="M64 16L67.6 43.6L96 47.2L67.6 50.8L64 79.2L60.4 50.8L32 47.2L60.4 43.6L64 16Z"/>
+  </g>
+  
+  <!-- Small accent stars -->
+  <g fill="white" opacity="0.7">
+    <path d="M96 32L97.6 38.4L104 40L97.6 41.6L96 48L94.4 41.6L88 40L94.4 38.4L96 32Z"/>
+    <path d="M32 80L33.6 86.4L40 88L33.6 89.6L32 96L30.4 89.6L24 88L30.4 86.4L32 80Z"/>
+  </g>
+  
+  <!-- Enhancement rays -->
+  <g stroke="white" stroke-width="2" opacity="0.6" fill="none">
+    <line x1="64" y1="8" x2="64" y2="24"/>
+    <line x1="64" y1="104" x2="64" y2="120"/>
+    <line x1="8" y1="64" x2="24" y2="64"/>
+    <line x1="104" y1="64" x2="120" y2="64"/>
+  </g>
+</svg>

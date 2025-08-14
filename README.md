@@ -1,41 +1,90 @@
-# PromptEnhancer Browser Extension 🚀
+# PromptEnhancer Chrome Extension 🚀
 
-A powerful Chrome extension that enhances your text prompts using AI through n8n workflows. Simply select text on any webpage, click "Enhance", and watch as your content is improved by AI.
+> Transform your text with AI-powered enhancement directly in your browser. Select, enhance, and elevate your writing instantly.
 
-## ✨ Features
+[![CI/CD Pipeline](https://github.com/your-username/prompt-enhancer-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/prompt-enhancer-extension/actions/workflows/ci.yml)
+[![Test Coverage](https://codecov.io/gh/your-username/prompt-enhancer-extension/branch/main/graph/badge.svg)](https://codecov.io/gh/your-username/prompt-enhancer-extension)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) workflows. Simply select text on any webpage, click "Enhance", and watch as your content is improved by AI.
+
+## 📁 Project Structure
+
+```
+prompt-enhancer/
+├── src/                      # Source code
+│   ├── background/           # Background service worker
+│   ├── content/              # Content scripts
+│   ├── popup/                # Extension popup UI
+│   ├── options/              # Options page (future)
+│   ├── modules/              # Shared utility modules
+│   └── assets/               # Icons and static resources
+├── tests/                    # Test suites
+│   ├── unit/                 # Unit tests
+│   ├── integration/          # Integration tests
+│   └── __mocks__/            # Test mocks
+├── config/                   # Configuration files
+│   ├── jest.config.js        # Jest testing config
+│   └── .eslintrc.js          # ESLint rules
+├── scripts/                  # Build and utility scripts
+│   └── build.js              # Build script
+├── dist/                     # Build output (gitignored)
+├── .github/                  # GitHub Actions workflows
+├── docs/                     # Additional documentation
+├── manifest.json             # Extension manifest (v3)
+├── package.json              # Dependencies and scripts
+├── CHANGELOG.md              # Version history
+└── README.md                 # This file
+```
+
+## 🎯 Features
 
 ### Currently Implemented ✅
 - **Text Selection Enhancement**: Select any text on a webpage and enhance it with AI
 - **Smart Button Positioning**: Enhancement button appears intelligently positioned near selected text
 - **n8n Webhook Integration**: Seamless integration with n8n workflows
-- **Real-time Status Monitoring**: Connection status and health checks
-- **Customizable Settings**: Configure webhook URL and extension preferences
-- **Error Handling**: Comprehensive error handling with user-friendly notifications
-- **Loading States**: Visual feedback during enhancement process
-- **Toast Notifications**: Success/error notifications with auto-dismiss
-- **Responsive UI**: Works across all screen sizes and devices
-- **Keyboard Shortcuts**: ESC key to hide enhancement button
-
-### Core Functionality
-- **Text Replacement**: Enhanced text automatically replaces selected content
-- **Visual Feedback**: Highlighted text shows successful replacements
-- **Connection Testing**: Built-in webhook connection testing
-- **Settings Persistence**: Extension settings saved to Chrome storage
-- **Cross-site Compatibility**: Works on all websites (respects CSP policies)
-
-## 🎯 User Flow
-
-1. **Text Selection** → User highlights text on any webpage
+{{ ... }}
 2. **Enhancement Button** → "Enhance" button appears with extension icon
 3. **AI Processing** → Click triggers n8n webhook with selected text
 4. **Text Replacement** → Enhanced text replaces original selection
 5. **Visual Confirmation** → Success notification and highlighted result
 
-## 🔧 Installation
+## 🚀 Quick Start
 
 ### Prerequisites
-- Google Chrome browser (version 88+)
-- n8n instance running with webhook endpoint
+- Node.js 16+ and npm
+- Google Chrome (version 88 or higher)
+- n8n workflow automation platform running locally or accessible via URL
+
+### Development Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/prompt-enhancer-extension.git
+   cd prompt-enhancer-extension
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run tests**
+   ```bash
+   npm test              # Run all tests
+   npm run test:watch    # Run tests in watch mode
+   npm run test:coverage # Generate coverage report
+   ```
+
+4. **Build the extension**
+   ```bash
+   npm run build         # Build to dist/
+   npm run build:watch   # Build with file watching
+   ```
+
+5. **Load in Chrome**
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable "Developer mode"
+   - Click "Load unpacked"
+   - Select the `dist/` folderendpoint
 - Basic understanding of Chrome extensions
 
 ### Steps
@@ -43,222 +92,147 @@ A powerful Chrome extension that enhances your text prompts using AI through n8n
 2. **Generate Icons** (optional):
    - Open `icons/generate-icons.html` in browser
    - Download the generated PNG files
-   - Place in `/icons/` directory as `icon16.png`, `icon48.png`, `icon128.png`
-3. **Load Extension**:
-   - Open Chrome and go to `chrome://extensions/`
-   - Enable "Developer mode" (top right)
-   - Click "Load unpacked"
-   - Select the extension directory
-4. **Configure Settings**:
-   - Click the PromptEnhancer icon in Chrome toolbar
+   -## 📦 Available Scripts
+
+```bash
+# Testing
+npm test                 # Run tests once
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Run tests with coverage report
+
+# Code Quality
+npm run lint             # Check code with ESLint
+npm run lint:fix         # Auto-fix linting issues
+
+# Building
+npm run build            # Build extension to dist/
+npm run build:watch      # Build with auto-rebuild on changes
+npm run clean            # Clean dist/ directory
+
+# Development
+npm run dev              # Show development instructions
+npm run validate         # Run lint and tests
+npm run precommit        # Pre-commit validation
+```ick the PromptEnhancer icon in Chrome toolbar
    - Set your n8n webhook URL
    - Test connection
    - Save settings
 
 ## ⚙️ Configuration
+{{ ... }}
+- Extension version
+- Webhook URL (without sensitive data)
+- Console error messages
+- Steps to reproduce
 
-### n8n Webhook Setup
-Your n8n workflow should:
-- Accept POST requests at your webhook URL
-- Expect JSON payload with `text` field
-- Return JSON response with enhanced text
+## 🚀 CI/CD Pipeline
 
-**Expected Request Format:**
-```json
-{
-  "text": "Original text to enhance",
-  "timestamp": "2024-01-01T00:00:00.000Z",
-  "url": "https://example.com",
-  "test": false
-}
+The project uses GitHub Actions for continuous integration:
+
+- **Linting**: Checks code style on every push/PR
+- **Testing**: Runs full test suite with coverage
+- **Building**: Validates build output
+- **Artifacts**: Generates extension package for releases
+
+View the workflow status and details in the [Actions tab](https://github.com/your-username/prompt-enhancer-extension/actions).
+
+## 📚 API Documentation
+
+### Utility Modules
+
+#### URL Helper (`src/modules/urlHelper.js`)
+```javascript
+isValidUrl(url)           // Validate URL format
+extractDomain(url)        // Extract domain from URL
+isAllowedDomain(url, domains)  // Check against whitelist
+addQueryParam(url, key, value) // Add URL parameter
+removeQueryParam(url, key)     // Remove URL parameter
 ```
 
-**Expected Response Format:**
-```json
-{
-  "enhancedText": "Your enhanced text here"
-}
+#### Storage Helper (`src/modules/storageHelper.js`)
+```javascript
+getStorageData(keys, type)     // Get from Chrome storage
+setStorageData(data, type)     // Save to Chrome storage
+removeStorageData(keys, type)  // Remove from storage
+clearStorage(type)             // Clear all storage
+getOrDefault(key, default, type) // Get with fallback
 ```
-
-Alternative response formats supported:
-- `{ "enhanced_text": "..." }`
-- `{ "text": "..." }`
-- `{ "result": "..." }`
-- Plain string response
-
-### Default Webhook URL
-```
-http://localhost:5678/webhook-test/n8n/prompt/enhance
-```
-
-> **Note**: This URL can be changed in the extension settings to point to your own n8n webhook endpoint.
-
-## 📁 Project Structure
-
-```
-prompt-enhancer/
-├── manifest.json              # Extension manifest (v3)
-├── background/
-│   └── background.js         # Service worker
-├── content/
-│   ├── content.js           # Content script (main logic)
-│   └── content.css          # Styles for enhancement UI
-├── popup/
-│   ├── popup.html           # Extension popup interface
-│   ├── popup.css            # Popup styles
-│   └── popup.js             # Popup functionality
-├── icons/
-│   ├── icon.svg             # Source SVG icon
-│   ├── generate-icons.html  # Icon generator tool
-│   ├── create-icons.js      # Icon creation script
-│   ├── icon16.png           # 16x16 icon
-│   ├── icon48.png           # 48x48 icon
-│   └── icon128.png          # 128x128 icon
-└── README.md                # This file
-```
-
-## 🔌 API Integration
-
-### Webhook Endpoint Requirements
-- **Method**: POST
-- **Content-Type**: application/json
-- **CORS**: Configure for extension origins if needed
-- **Response Time**: < 30 seconds (recommended < 10s)
-
-### Error Handling
-The extension handles various error scenarios:
-- Network connection failures
-- Invalid webhook responses
-- Timeout errors (5-second timeout for health checks)
-- CORS issues
-- Invalid JSON responses
-
-## 🎨 UI Components
-
-### Enhancement Button
-- Gradient background (#667eea to #764ba2)
-- Star icon with "Enhance" text
-- Smooth animations and hover effects
-- Loading spinner during processing
-- Auto-positioning to avoid viewport edges
-
-### Popup Interface
-- Status indicator with real-time connection monitoring
-- Toggle switches for settings
-- Webhook URL configuration
-- Connection testing functionality
-- Usage instructions
-- Error/success messaging
-
-## 🔒 Permissions
-
-### Required Permissions
-- `activeTab`: Access current tab content
-- `storage`: Save extension settings
-
-### Host Permissions
-- `http://localhost:5678/*`: Default n8n webhook access
-- `https://*/*`: HTTPS website access
-
-## 🛠️ Development
-
-### Local Development
-1. Make changes to source files
-2. Go to `chrome://extensions/`
-3. Click "Reload" on PromptEnhancer extension
-4. Test changes on various websites
-
-### Debugging
-- **Content Script**: Use browser DevTools console
-- **Background Script**: Go to extension details → "Inspect views: service worker"
-- **Popup**: Right-click extension icon → "Inspect popup"
-
-### Testing Checklist
-- [ ] Text selection on different websites
-- [ ] Enhancement button positioning
-- [ ] Webhook communication
-- [ ] Error handling scenarios
-- [ ] Settings persistence
-- [ ] Cross-browser compatibility (Chrome focus)
-
-## 🚀 Features Not Yet Implemented
-
-### Planned Enhancements
-- **Multiple AI Providers**: Support for OpenAI, Anthropic, etc.
-- **Context Awareness**: Use page context for better enhancements
-- **Enhancement History**: Track and revert previous enhancements
-- **Batch Processing**: Enhance multiple selections simultaneously
-- **Custom Templates**: Predefined enhancement templates
-- **Keyboard Shortcuts**: Global hotkeys for quick enhancement
-- **Analytics Dashboard**: Usage statistics and insights
-- **Cloud Sync**: Settings sync across devices
-- **Rate Limiting**: Prevent API abuse with smart queuing
-
-### Technical Improvements
-- **Offline Mode**: Cache common enhancements
-- **Performance Optimization**: Lazy loading and code splitting
-- **Security Enhancements**: Request signing and validation
-- **Accessibility**: Screen reader support and ARIA labels
-- **Internationalization**: Multi-language support
-- **Testing Suite**: Automated unit and integration tests
-
-## 🔧 Recommended Next Steps
-
-1. **Setup n8n Workflow**: Create your AI enhancement workflow
-2. **Test Connection**: Use the built-in connection tester
-3. **Customize Prompts**: Optimize your n8n workflow for specific use cases
-4. **Monitor Performance**: Check extension performance on heavy pages
-5. **Gather Feedback**: Test with real users and iterate
-6. **Scale Infrastructure**: Prepare n8n for production usage
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
 **Extension not loading:**
-- Check Chrome version compatibility
-- Ensure all files are present
-- Check for console errors
+- Ensure you're loading from `dist/` not the root directory
+- Run `npm run build` first
+- Check Chrome console for errors
 
-**Enhancement button not appearing:**
-- Verify text selection (minimum 3 characters)
-- Check if extension is enabled
-- Look for CSP restrictions
+**Tests failing:**
+- Run `npm install` to ensure all dependencies are installed
+- Clear Jest cache: `npx jest --clearCache`
+- Check Node.js version (16+ required)
 
-**Webhook connection fails:**
-- Verify n8n is running
-- Check webhook URL format
-- Test with CORS disabled for development
-- Confirm network connectivity
-
-**Text replacement not working:**
-- Check webhook response format
-- Verify page allows content modification
-- Try on different websites
-
-### Debug Information
-When reporting issues, include:
-- Chrome version
-- Extension version
-- Webhook URL (without sensitive data)
-- Console error messages
-- Steps to reproduce
+**Build errors:**
+- Delete `dist/` and rebuild: `npm run clean && npm run build`
+- Check for syntax errors: `npm run lint`
 
 ## 📄 License
 
-This project is open source. Feel free to modify and distribute according to your needs.
+MIT License - feel free to use this project for personal or commercial purposes.tribute according to your needs.
 
 ## 🤝 Contributing
 
-Contributions welcome! Please:
-1. Fork the repository
-2. Create feature branch
+### Development Workflow
+
+1. **Fork the repository**
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Make your changes**
+   - Follow the existing code style
+   - Add tests for new functionality
+   - Update documentation as needed
+4. **Run validation**
+   ```bash
+   npm run validate  # Runs lint and tests
+   ```
+5. **Commit your changes**
+   ```bash
+   git commit -m "feat: add awesome feature"
+   ```
+6. **Push to your fork**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+7. **Open a Pull Request**
+
+### Code Style Guidelines
+
+- Use ES6+ features where appropriate
+- Follow ESLint rules (run `npm run lint`)
+- Use meaningful variable and function names
+- Add JSDoc comments for public functions
+- Keep functions small and focused
+
+### Commit Message Format
+
+```
+<type>: <description>
+
+Types:
+- feat: New feature
+- fix: Bug fix
+- docs: Documentation changes
+- style: Code style changes
+- refactor: Code refactoring
+- test: Test additions/changes
+- chore: Build/tooling changes
+```e feature branch
 3. Make changes with tests
 4. Submit pull request with description
 
 ## 📞 Support
-
-For support and feature requests:
 - Check existing issues first
 - Create detailed bug reports
 - Include debug information

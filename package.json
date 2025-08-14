@@ -4,9 +4,19 @@
   "description": "A Chrome extension that enhances text prompts using AI through n8n workflows",
   "main": "manifest.json",
   "scripts": {
-    "build": "echo 'Extension ready for Chrome' && ls -la",
-    "dev": "echo 'Load extension in Chrome at chrome://extensions/ in Developer Mode'",
-    "icons": "open icons/generate-icons.html"
+    "test": "jest --config=config/jest.config.js",
+    "test:watch": "jest --config=config/jest.config.js --watch",
+    "test:coverage": "jest --config=config/jest.config.js --coverage",
+    "lint": "eslint . --config=config/.eslintrc.js --ext .js",
+    "lint:fix": "eslint . --config=config/.eslintrc.js --ext .js --fix",
+    "build": "npm run clean && npm run build:copy",
+    "build:copy": "node scripts/build.js",
+    "build:watch": "node scripts/build.js --watch",
+    "clean": "rm -rf dist",
+    "validate": "npm run lint && npm run test",
+    "precommit": "npm run validate",
+    "dev": "echo 'Load extension in Chrome at chrome://extensions/ in Developer Mode from dist/ folder'",
+    "icons": "open src/assets/icons/generate-icons.html"
   },
   "keywords": [
     "chrome-extension",
@@ -30,6 +40,16 @@
     "permissions": ["activeTab", "storage"],
     "host_permissions": ["http://localhost:5678/*", "https://*/*"]
   },
-  "devDependencies": {},
-  "dependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.50.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "dependencies": {},
+  "jest": {
+    "preset": "./config/jest.config.js"
+  }
 }
