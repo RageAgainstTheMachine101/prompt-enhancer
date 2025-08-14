@@ -5,9 +5,20 @@ class PromptEnhancer {
     this.selectedRange = null;
     this.enhanceButton = null;
     this.isProcessing = false;
-    this.webhookUrl = 'http://localhost:5678/webhook-test/n8n/prompt/enhance';
+    this.webhookUrl = '';
+    this.loadWebhookUrl();
     
     this.init();
+  }
+
+  async loadWebhookUrl() {
+    try {
+      const result = await chrome.storage.sync.get(['webhookUrl']);
+      this.webhookUrl = result.webhookUrl || 'http://localhost:5678/webhook-test/n8n/prompt/enhance';
+    } catch (error) {
+      console.error('Error loading webhook URL:', error);
+      this.webhookUrl = 'http://localhost:5678/webhook-test/n8n/prompt/enhance';
+    }
   }
 
   init() {

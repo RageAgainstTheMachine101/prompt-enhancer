@@ -4,7 +4,7 @@ class PopupManager {
     this.settings = {
       enabled: true,
       showNotifications: true,
-      webhookUrl: 'http://localhost:5678/webhook-test/n8n/prompt/enhance'
+      webhookUrl: 'http://localhost:5678/webhook-test/n8n/prompt/enhance' // Default URL, can be changed in settings
     };
     
     this.init();
@@ -59,12 +59,13 @@ class PopupManager {
 
   async loadSettings() {
     try {
-      const result = await chrome.storage.sync.get(['enabled', 'showNotifications', 'webhookUrl']);
+      const result = await chrome.storage.sync.get(['enabled', 'showNotifications', 'webhookUrl', 'lastConnectionCheck']);
       
       this.settings = {
         enabled: result.enabled !== undefined ? result.enabled : true,
         showNotifications: result.showNotifications !== undefined ? result.showNotifications : true,
-        webhookUrl: result.webhookUrl || 'http://localhost:5678/webhook-test/n8n/prompt/enhance'
+        webhookUrl: result.webhookUrl || 'http://localhost:5678/webhook-test/n8n/prompt/enhance',
+        lastConnectionCheck: result.lastConnectionCheck || 0
       };
       
       console.log('Settings loaded:', this.settings);
@@ -119,7 +120,8 @@ class PopupManager {
       await chrome.storage.sync.set({
         enabled: this.settings.enabled,
         showNotifications: this.settings.showNotifications,
-        webhookUrl: this.settings.webhookUrl
+        webhookUrl: this.settings.webhookUrl,
+        lastConnectionCheck: this.settings.lastConnectionCheck
       });
 
       // Show success
@@ -171,7 +173,7 @@ class PopupManager {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: 'Test connection from PromptEnhancer',
+          text: '/health-check',
           timestamp: new Date().toISOString(),
           test: true
         })
@@ -189,7 +191,16 @@ class PopupManager {
       console.error('Connection test failed:', error);
       statusDot.className = 'status-dot';
       statusText.textContent = 'Connection failed';
-      this.showMessage('Connection failed: ' + error.message, 'error');
+      
+      // Provide more user-friendly error messages
+      let errorMessage = 'Connection failed';
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMessage = 'Failed to connect to the server. Please check your webhook URL and network connection.';
+      } else if (error.message) {
+        errorMessage = 'Connection failed: ' + error.message;
+      }
+      
+      this.showMessage(errorMessage, 'error');
     } finally {
       testBtn.innerHTML = originalText;
       testBtn.disabled = false;
@@ -197,6 +208,26 @@ class PopupManager {
   }
 
   async checkConnectionStatus() {
+    // Check if we should run the connection status check
+    const now = Date.now();
+    const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
+    
+    // Only run if it's been more than 5 minutes since last check
+    if (this.settings.lastConnectionCheck && (now - this.settings.lastConnectionCheck) < fiveMinutes) {
+      console.log('Skipping connection check - last check was less than 5 minutes ago');
+      return;
+    }
+    
+    // Update the last connection check time
+    this.settings.lastConnectionCheck = now;
+    
+    // Save the updated time to storage
+    try {
+      await chrome.storage.sync.set({ lastConnectionCheck: this.settings.lastConnectionCheck });
+    } catch (error) {
+      console.error('Error saving last connection check time:', error);
+    }
+    
     if (!this.settings.enabled || !this.settings.webhookUrl) {
       return;
     }
@@ -241,6 +272,14 @@ class PopupManager {
       } else {
         statusDot.className = 'status-dot';
         statusText.textContent = 'Connection failed';
+        // Show error message for connection issues
+        let errorMessage = 'Connection failed';
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          errorMessage = 'Failed to connect to the server. Please check your webhook URL and network connection.';
+        } else if (error.message) {
+          errorMessage = 'Connection failed: ' + error.message;
+        }
+        this.showMessage(errorMessage, 'error');
       }
     }
   }

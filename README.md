@@ -91,6 +91,8 @@ Alternative response formats supported:
 http://localhost:5678/webhook-test/n8n/prompt/enhance
 ```
 
+> **Note**: This URL can be changed in the extension settings to point to your own n8n webhook endpoint.
+
 ## 📁 Project Structure
 
 ```

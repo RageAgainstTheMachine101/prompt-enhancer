@@ -100,14 +100,20 @@
   font-size: 14px;
   max-width: 300px;
   animation: promptEnhancerSlideIn 0.3s ease;
+  color: #1e293b;
+  font-weight: 500;
 }
 
 .prompt-enhancer-toast.error {
   border-left-color: #ef4444;
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 .prompt-enhancer-toast.success {
   border-left-color: #10b981;
+  background: #d1fae5;
+  color: #065f46;
 }
 
 @keyframes promptEnhancerSlideIn {

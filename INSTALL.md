@@ -17,6 +17,7 @@
 ### Step 3: Configure Your n8n Webhook
 1. Click the PromptEnhancer icon in Chrome toolbar
 2. Set your webhook URL (default: `http://localhost:5678/webhook-test/n8n/prompt/enhance`)
+   > You can change this to your own n8n webhook endpoint in the extension settings
 3. Click "Test Connection" to verify it works
 4. Click "Save Settings"
 
