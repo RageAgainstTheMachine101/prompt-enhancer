@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptEnhancer Settings</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                    <path d="M19 15L20.09 18.26L24 19L20.09 19.74L19 23L17.91 19.74L14 19L17.91 18.26L19 15Z"/>
+                    <path d="M6 15L7.09 18.26L11 19L7.09 19.74L6 23L4.91 19.74L1 19L4.91 18.26L6 15Z"/>
+                </svg>
+                <h1>PromptEnhancer</h1>
+            </div>
+            <div class="version">v1.0.0</div>
+        </div>
+
+        <!-- Status Section -->
+        <div class="status-section">
+            <div class="status-item">
+                <div class="status-label">Status</div>
+                <div class="status-indicator" id="statusIndicator">
+                    <div class="status-dot"></div>
+                    <span id="statusText">Checking...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="settings-section">
+            <h2>Settings</h2>
+            
+            <div class="setting-item">
+                <label class="setting-label">
+                    <input type="checkbox" id="enabledToggle" class="toggle">
+                    <span class="toggle-slider"></span>
+                    Enable Extension
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <label class="setting-label">
+                    <input type="checkbox" id="notificationsToggle" class="toggle">
+                    <span class="toggle-slider"></span>
+                    Show Notifications
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <label for="webhookUrl" class="input-label">Webhook URL</label>
+                <input type="url" 
+                       id="webhookUrl" 
+                       class="text-input"
+                       placeholder="http://localhost:5678/webhook-test/n8n/prompt/enhance">
+                <div class="input-help">Your n8n webhook endpoint for prompt enhancement</div>
+            </div>
+        </div>
+
+        <!-- Actions Section -->
+        <div class="actions-section">
+            <button id="saveSettings" class="btn btn-primary">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 12v7H5v-7H3v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/>
+                    <path d="m13 2.83 2.83 2.83L14 7.5V13h-4V7.5L8.17 5.66 11 2.83z"/>
+                </svg>
+                Save Settings
+            </button>
+            
+            <button id="testConnection" class="btn btn-secondary">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                Test Connection
+            </button>
+        </div>
+
+        <!-- Usage Instructions -->
+        <div class="help-section">
+            <h3>How to use</h3>
+            <ol class="usage-steps">
+                <li>Select any text on a web page</li>
+                <li>Click the "Enhance" button that appears</li>
+                <li>Wait for the AI to improve your text</li>
+                <li>The enhanced text will replace your selection</li>
+            </ol>
+        </div>
+
+        <!-- Footer -->
+        <div class="popup-footer">
+            <div class="footer-links">
+                <a href="#" id="viewLogs" class="footer-link">View Logs</a>
+                <a href="#" id="reportIssue" class="footer-link">Report Issue</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate PromptEnhancer Icons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .icon-container {
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .icon-preview {
+            margin-bottom: 10px;
+        }
+        canvas {
+            border: 1px solid #ddd;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #5a67d8;
+        }
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>PromptEnhancer Icon Generator</h2>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Right-click on each canvas below</li>
+            <li>Select "Save image as..." or "Copy image"</li>
+            <li>Save as PNG with the specified filename</li>
+            <li>Place the files in the /icons/ directory</li>
+        </ol>
+        <p><strong>Required files:</strong> icon16.png, icon48.png, icon128.png</p>
+    </div>
+
+    <div class="icon-container">
+        <div class="icon-preview">
+            <canvas id="canvas16" width="16" height="16"></canvas>
+        </div>
+        <div>16x16 px</div>
+        <div><strong>icon16.png</strong></div>
+        <button onclick="downloadIcon('canvas16', 'icon16.png')">Download</button>
+    </div>
+
+    <div class="icon-container">
+        <div class="icon-preview">
+            <canvas id="canvas48" width="48" height="48"></canvas>
+        </div>
+        <div>48x48 px</div>
+        <div><strong>icon48.png</strong></div>
+        <button onclick="downloadIcon('canvas48', 'icon48.png')">Download</button>
+    </div>
+
+    <div class="icon-container">
+        <div class="icon-preview">
+            <canvas id="canvas128" width="128" height="128"></canvas>
+        </div>
+        <div>128x128 px</div>
+        <div><strong>icon128.png</strong></div>
+        <button onclick="downloadIcon('canvas128', 'icon128.png')">Download</button>
+    </div>
+
+    <script>
+        // Draw icon on canvas
+        function drawIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            const center = size / 2;
+            const radius = size * 0.4;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            
+            // Background circle
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(center, center, radius, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // White border
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size > 32 ? 2 : 1;
+            ctx.stroke();
+            
+            // Main star
+            ctx.fillStyle = 'white';
+            ctx.globalAlpha = 0.95;
+            drawStar(ctx, center, center, radius * 0.6, radius * 0.3, 4);
+            
+            // Small accent stars if icon is large enough
+            if (size >= 48) {
+                ctx.globalAlpha = 0.7;
+                drawStar(ctx, center + radius * 0.6, center - radius * 0.6, radius * 0.15, radius * 0.08, 4);
+                drawStar(ctx, center - radius * 0.6, center + radius * 0.6, radius * 0.15, radius * 0.08, 4);
+            }
+            
+            ctx.globalAlpha = 1;
+        }
+        
+        function drawStar(ctx, x, y, outerRadius, innerRadius, points) {
+            ctx.beginPath();
+            let angle = -Math.PI / 2;
+            const angleStep = Math.PI / points;
+            
+            for (let i = 0; i < points * 2; i++) {
+                const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                const px = x + Math.cos(angle) * radius;
+                const py = y + Math.sin(angle) * radius;
+                
+                if (i === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+                
+                angle += angleStep;
+            }
+            
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Initialize icons
+        document.addEventListener('DOMContentLoaded', () => {
+            drawIcon(document.getElementById('canvas16'));
+            drawIcon(document.getElementById('canvas48'));
+            drawIcon(document.getElementById('canvas128'));
+        });
+    </script>
+</body>
+</html>

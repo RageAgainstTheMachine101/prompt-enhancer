@@ -1,0 +1,35 @@
+{
+  "name": "prompt-enhancer-extension",
+  "version": "1.0.0",
+  "description": "A Chrome extension that enhances text prompts using AI through n8n workflows",
+  "main": "manifest.json",
+  "scripts": {
+    "build": "echo 'Extension ready for Chrome' && ls -la",
+    "dev": "echo 'Load extension in Chrome at chrome://extensions/ in Developer Mode'",
+    "icons": "open icons/generate-icons.html"
+  },
+  "keywords": [
+    "chrome-extension",
+    "ai",
+    "prompt-enhancement",
+    "n8n",
+    "text-processing",
+    "productivity"
+  ],
+  "author": "VK",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/prompt-enhancer-extension"
+  },
+  "engines": {
+    "chrome": ">=88.0"
+  },
+  "manifest": {
+    "version": 3,
+    "permissions": ["activeTab", "storage"],
+    "host_permissions": ["http://localhost:5678/*", "https://*/*"]
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
