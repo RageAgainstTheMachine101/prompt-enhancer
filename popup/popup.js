@@ -217,7 +217,7 @@ class PopupManager {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: 'Health check',
+          text: '/health-check',
           timestamp: new Date().toISOString(),
           healthCheck: true
         }),
@@ -276,7 +276,7 @@ class PopupManager {
 
   reportIssue() {
     // Create GitHub issue URL with pre-filled template
-    const issueUrl = 'https://github.com/your-username/prompt-enhancer/issues/new' +
+    const issueUrl = 'https://github.com/RageAgainstTheMachine101/prompt-enhancer/issues/new' +
       '?template=bug_report.md' +
       '&title=' + encodeURIComponent('[Bug Report] ') +
       '&body=' + encodeURIComponent(`
