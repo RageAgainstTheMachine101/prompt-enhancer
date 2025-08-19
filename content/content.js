@@ -196,7 +196,6 @@ class PromptEnhancer {
     this.enhanceButton.classList.add('loading');
 
     try {
-      this.showToast('Enhancing prompt...', 'info');
       // Send request to background service worker to avoid mixed-content/CORS issues
       const result = await new Promise((resolve, reject) => {
         try {
